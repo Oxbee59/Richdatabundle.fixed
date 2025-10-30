@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 # render-build.sh
 
-echo "Applying database migrations..."
+set -o errexit  # Exit on error
+
+echo "Installing dependencies..."
+pip install -r requirements.txt
+
+echo "Running database migrations..."
 python manage.py migrate --noinput
 
 echo "Collecting static files..."
