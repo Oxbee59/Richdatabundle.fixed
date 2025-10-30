@@ -72,10 +72,20 @@ WSGI_APPLICATION = 'richdatabundle_project.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"  # fallback to SQLite
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'richdatabundle_new_db',
+        'USER': 'richdatabundle_new_db_user',
+        'PASSWORD': 'ttKHieyz1oy2MQNvbaKVMBPKPEjNKqAZ',
+        'HOST': 'dpg-d41tcp6uk2gs738q6nig-a',
+        'PORT': '5432',
+    }
 }
+
+# Optional: allow Render to override this if DATABASE_URL is provided
+DATABASES['default'] = dj_database_url.config(default=f"postgresql://{DATABASES['default']['USER']}:{DATABASES['default']['PASSWORD']}@{DATABASES['default']['HOST']}:{DATABASES['default']['PORT']}/{DATABASES['default']['NAME']}", conn_max_age=600)
+
+
 
 # -----------------------------------
 # Password Validators
